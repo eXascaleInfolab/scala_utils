@@ -55,4 +55,10 @@ object ScalaNLP {
 	}//porterStemSentence
 
 
+	def ngrams(s: String, n: Int, wordSeparator: String = " ") = {
+		val words = s.replaceAll(s"$wordSeparator$wordSeparator+", wordSeparator).split(wordSeparator)
+		words.sliding(n)
+	}//ngrams
+
+
 }//ScalaNLP
