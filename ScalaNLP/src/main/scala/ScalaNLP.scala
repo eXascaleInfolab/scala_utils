@@ -13,13 +13,12 @@ object ScalaNLP {
 	//TODO: test
 	private val stopword_path_all_languages = "../resources/stopwords"
 	lazy val stopwords: Set[String] = (for (word <- io.Source.fromFile(stopword_path_all_languages + "/english").getLines()) yield word).toSet
-	private var classifier: AbstractSequenceClassifier[CoreLabel] = null
+	private lazy val classifier = CRFClassifier.getClassifier("edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz")
 
 	type StringOffsetNotation = List[(Int, Int, String)]
 
 
 	def classifyToCharacterOffsets(sentence: String) = {
-		if (classifier == null) classifier = CRFClassifier.getClassifier("edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger")
 		classifier.classifyToCharacterOffsets(sentence).asScala.map(t => (t.first(), t.second(), t.third()))
 	} //classifyToCharacterOffsets
 
@@ -63,6 +62,4 @@ object ScalaNLP {
 		words.sliding(n).toList
 	} //ngrams
 
-}
-
-//ScalaNLP
+}//ScalaNLP
