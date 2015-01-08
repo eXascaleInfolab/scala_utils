@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 object ScalaNLP {
 	//TODO: test
 	private val stopword_path_all_languages = "../resources/stopwords"
-	lazy val stopwords: Set[String] = (for (word <- io.Source.fromFile(stopword_path_all_languages + "/english").getLines()) yield word).toSet
+	lazy val stopwords: Set[String] = (for (word <- io.Source.fromURL(getClass.getResource("/stopwords/english")).getLines()) yield word).toSet
 	private lazy val classifier = CRFClassifier.getClassifier("edu/stanford/nlp/models/ner/english.all.3class.distsim.crf.ser.gz")
 
 	type StringOffsetNotation = List[(Int, Int, String)]
