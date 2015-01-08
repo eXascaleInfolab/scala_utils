@@ -36,7 +36,6 @@ class RDFSearch(val rdf3xHome: String, val dbName: String) {
 			}
 
 			override def hasNext() = {
-//				println("\t called has next‰")
 				val hasnext = rs.next()
 				if(!hasnext) close()
 				hasnext
@@ -55,7 +54,7 @@ object RDFSearch {
 		val dbPath = args(1)
 
 		val rdfs = new RDFSearch(rdf3xhome, dbPath)
-		for (row <- rdfs.SPARQLQuery("select ?name where { <http://dbpedia.org/resource/Tom_Cruise> ?p ?name } LIMIT 20"))
+		for (row <- rdfs.SPARQLQuery("select ?name where { <http://dbpedia.org/resource/Tom_Cruise> <http://www.w3.org/2000/01/rdf-schema#label> ?name } LIMIT 20"))
 			println(s"${row}")
 		rdfs.close()
 		println("the end.")
